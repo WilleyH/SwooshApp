@@ -14,5 +14,6 @@
     <string name="i_am_a">I am a:</string>
     <string name="beginner">BEGINNER</string>
     <string name="baller">BALLER</string>
+    <string name="search_league">TextView</string>
 
 </resources>

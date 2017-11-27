@@ -1,4 +1,4 @@
-package com.kholak.swoosh
+package com.kholak.swoosh.Controller
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
