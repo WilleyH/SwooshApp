@@ -4,38 +4,47 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import com.kholak.swoosh.Utilities.EXTRA_LEAGUE
+import com.kholak.swoosh.Model.Player
 import com.kholak.swoosh.R
-import com.kholak.swoosh.Utilities.EXTRA_SKILL
+import com.kholak.swoosh.Utilities.EXTRA_PLAYER
 import kotlinx.android.synthetic.main.activity_skill.*
 
 class SkillActivity : BaseActivity() {
 
-    var league = ""
-    var selectedSkill = ""
+    lateinit var player : Player
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putParcelable(EXTRA_PLAYER, player)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_skill)
-        league = intent.getStringExtra(EXTRA_LEAGUE)
-        println(league)
+        player = intent.getParcelableExtra(EXTRA_PLAYER)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        if (savedInstanceState != null) {
+            player = savedInstanceState.getParcelable(EXTRA_PLAYER)
+        }
     }
 
     fun unbeginnerBtn(view: View) {
         ballerBtn.isChecked = false
-        selectedSkill = "beginner"
+        player.skill = "beginner"
     }
 
     fun unballerBtn(view: View) {
         beginnerBtn.isChecked = false
-        selectedSkill = "baller"
+        player.skill = "baller"
     }
 
     fun finishNextClicked(view: View) {
-        if (selectedSkill != "") {
+        if (player.skill != "") {
             val finishActivity = Intent(this, FinishActivity::class.java)
-            finishActivity.putExtra(EXTRA_LEAGUE, league)
-            finishActivity.putExtra(EXTRA_SKILL, selectedSkill)
+            finishActivity.putExtra(EXTRA_PLAYER, player)
             startActivity(finishActivity)
         } else {
             Toast.makeText(this, "Please select a skill.", Toast.LENGTH_SHORT).show()
